@@ -3,20 +3,12 @@ services:
     name: github-bounty-api
     env: python
     plan: free
-    buildCommand: |
-      export CARGO_HOME=/opt/render/project/src/.cargo
-      export RUSTUP_HOME=/opt/render/project/src/.rustup
-      mkdir -p $CARGO_HOME $RUSTUP_HOME
-      pip install -r requirements.txt
+    buildCommand: pip install -r requirements.txt
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: PORT
         value: 10000
       - key: GITHUB_TOKEN
         sync: false  # You'll need to set this in Render dashboard
-      - key: CARGO_HOME
-        value: /opt/render/project/src/.cargo
-      - key: RUSTUP_HOME
-        value: /opt/render/project/src/.rustup
     autoDeploy: true
     branch: main
